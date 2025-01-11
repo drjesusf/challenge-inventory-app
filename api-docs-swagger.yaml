@@ -1,0 +1,133 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/products:
+    get:
+      tags:
+      - inventory-controller
+      summary: Obtener todos los productos
+      description: Recupera todos los productos del inventario
+      operationId: getAllProducts
+      responses:
+        "200":
+          description: Lista de productos recuperada exitosamente
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+    post:
+      tags:
+      - inventory-controller
+      summary: Agregar un producto
+      description: Crea un nuevo producto en el inventario
+      operationId: addProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+        required: true
+      responses:
+        "201":
+          description: Producto creado exitosamente
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Datos del producto inválidos
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/products/{id}:
+    get:
+      tags:
+      - inventory-controller
+      summary: Obtener un producto por su ID
+      description: Recupera los detalles de un producto utilizando su ID
+      operationId: getProductById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: Producto no encontrado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Product"
+        "200":
+          description: Producto encontrado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Product"
+    patch:
+      tags:
+      - inventory-controller
+      summary: Actualizar inventario de un producto
+      description: Actualiza la cantidad de un producto en el inventario
+      operationId: updateInventory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateInventoryRequest"
+        required: true
+      responses:
+        "200":
+          description: Producto actualizado exitosamente
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Producto no encontrado
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Cantidad inválida
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Product"
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: float
+    UpdateInventoryRequest:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
