@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abcd134.
+      MYSQL_DATABASE: db_test             # Nombre de la base de datos inicial
+      MYSQL_USER: jramirez               # Nombre de usuario
+      MYSQL_PASSWORD: abcd1234.       # Contraseña del usuario
+    ports:
+      - "3308:3306"  # Mapea el puerto 3306 al host
+    volumes:
+      - mysql_data:/var/lib/mysql            # Persistencia de datos
+
+volumes:
+  mysql_data:
