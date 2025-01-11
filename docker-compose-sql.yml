@@ -6,7 +6,7 @@ services:
     container_name: mysql-container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: abcd134.
+      MYSQL_ROOT_PASSWORD: abcd1234.
       MYSQL_DATABASE: db_test             # Nombre de la base de datos inicial
       MYSQL_USER: jramirez               # Nombre de usuario
       MYSQL_PASSWORD: abcd1234.       # Contraseña del usuario
